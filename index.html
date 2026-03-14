@@ -3,36 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NFLU 2026 Draft Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>LSU 2026 Draft War Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#060810;--s1:#0b0e1a;--s2:#10141f;--s3:#151927;
-  --border:#1c2133;--border2:#242c42;
-  --text:#dde3f0;--muted:#4a5570;--muted2:#7a88a8;
-  --accent:#e8c84a;--accent2:#4ab8e8;--accent3:#e8644a;
-  --green:#4ae89a;--gold:#e8a44a;--lsu-gold:#c4a44a;
+  --bg:#0e0618;--s1:#160a24;--s2:#1c0f2e;--s3:#22143a;
+  --border:#2d1a4a;--border2:#3d2660;
+  --text:#f0e8d8;--muted:#6a527a;--muted2:#a08aaa;
+  --accent:#FDD023;--accent2:#c8971f;--accent3:#e85a2a;
+  --green:#4ae89a;--gold:#FDD023;--lsu-gold:#FDD023;
+  --lsu-purple:#461D7C;--lsu-deep:#0e0618;--lsu-mid:#1c0f2e;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;overflow:hidden}
-.header{background:linear-gradient(135deg,#08091a,#0e1220);border-bottom:2px solid var(--accent);
+body{background:var(--bg);color:var(--text);font-family:'Oswald',sans-serif;min-height:100vh;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 40px,
+    rgba(70,29,124,0.04) 40px,
+    rgba(70,29,124,0.04) 41px
+  );pointer-events:none;z-index:0}
+.layout,.header{position:relative;z-index:1}
+.header{background:linear-gradient(135deg,#0e0618 0%,#1c0f2e 50%,#461D7C 100%);border-bottom:2px solid var(--accent);
   padding:10px 18px;display:flex;align-items:center;gap:12px;height:58px;flex-shrink:0}
 .logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  background:linear-gradient(90deg,#FDD023,#fff8dc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .logo-sub{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--muted);text-transform:uppercase}
 .divider{width:1px;height:36px;background:var(--border2)}
-.budget-badge{background:rgba(196,164,74,.1);border:1px solid var(--lsu-gold);border-radius:7px;padding:5px 12px}
-.budget-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--lsu-gold);text-transform:uppercase}
-.budget-val{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent);line-height:1}
+.budget-badge{background:rgba(70,29,124,.35);border:1px solid var(--accent);border-radius:7px;padding:5px 12px;box-shadow:0 0 12px rgba(253,208,35,.15)}
+.budget-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--accent2);text-transform:uppercase}
+.budget-val{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent);line-height:1;text-shadow:0 0 8px rgba(253,208,35,.4)}
 .h-spacer{flex:1}
 .nom-wrap{background:var(--s2);border:1px solid var(--border2);border-radius:9px;padding:6px 11px;
   display:flex;align-items:center;gap:8px}
 .nom-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;white-space:nowrap}
-.nom-input{background:transparent;border:none;color:var(--text);font-family:'Barlow Condensed',sans-serif;
+.nom-input{background:transparent;border:none;color:var(--text);font-family:'Oswald',sans-serif;
   font-size:16px;font-weight:600;outline:none;width:200px}
 .nom-input::placeholder{color:var(--muted)}
-.btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;
+.btn{font-family:'Oswald',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;
   text-transform:uppercase;border:none;border-radius:6px;padding:6px 12px;cursor:pointer;transition:all .15s}
 .btn-gold{background:var(--accent);color:#000}.btn-gold:hover{filter:brightness(1.1)}
 .btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--muted2)}
@@ -41,31 +51,32 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 /* TWO-PANEL LAYOUT - both panels scroll independently */
 .layout{display:grid;grid-template-columns:1fr 282px;height:calc(100vh - 58px);overflow:hidden}
 .left{overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column}
-.right{background:var(--s1);border-left:1px solid var(--border);overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+.right{background:linear-gradient(180deg,#160a24,#1c0f2e);border-left:1px solid var(--border);overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
 
 .tabs{display:flex;gap:2px;background:var(--s2);border-radius:8px;padding:3px;margin-bottom:12px;flex-shrink:0}
 .tab{flex:1;padding:6px;border-radius:6px;text-align:center;font-family:'DM Mono',monospace;
   font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;color:var(--muted);transition:all .15s}
-.tab.active{background:var(--accent);color:#000;font-weight:700}
+.tab.active{background:var(--lsu-purple);color:var(--accent);font-weight:700;border:1px solid var(--accent)}
 
 .filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;align-items:center;flex-shrink:0}
 .fpill{background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:3px 9px;
   font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;
   color:var(--muted);cursor:pointer;transition:all .12s}
-.fpill.active{background:rgba(232,200,74,.12);border-color:var(--accent);color:var(--accent)}
+.fpill.active{background:rgba(70,29,124,.4);border-color:var(--accent);color:var(--accent)}
 .srch{background:var(--s2);border:1px solid var(--border);border-radius:7px;
   padding:5px 9px;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;outline:none;width:130px}
 .srch:focus{border-color:var(--accent)}
 .sort-sel{background:var(--s2);border:1px solid var(--border);border-radius:7px;padding:4px 7px;
   color:var(--text);font-family:'DM Mono',monospace;font-size:9px;outline:none;cursor:pointer}
 
-.th{display:grid;grid-template-columns:1fr 44px 52px 52px 56px 58px;
+.th{display:grid;grid-template-columns:1fr 44px 52px 52px 56px 58px 32px;
   padding:5px 10px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;
   text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);flex-shrink:0}
-.tr{display:grid;grid-template-columns:1fr 44px 52px 52px 56px 58px;
+.tr{display:grid;grid-template-columns:1fr 44px 52px 52px 56px 58px 32px;
   padding:7px 10px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;align-items:center}
 .tr:hover{background:var(--s2)}
 .tr.sold{opacity:.28;pointer-events:none}
+.tr.targeted{border-left:3px solid var(--accent);background:rgba(70,29,124,.18)}
 .pn{font-size:13px;font-weight:600}
 .pg{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)}
 .tc{text-align:center}
@@ -74,7 +85,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 .pick-item{background:var(--s2);border:1px solid var(--border);border-radius:7px;
   padding:7px 11px;display:flex;align-items:center;gap:9px;margin-bottom:5px;animation:fi .2s ease}
 @keyframes fi{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-.pick-item.mine{border-color:var(--lsu-gold);background:rgba(196,164,74,.07)}
+.pick-item.mine{border-color:var(--accent);background:rgba(70,29,124,.25);box-shadow:0 0 8px rgba(253,208,35,.1)}
 .pick-pos{font-family:'Bebas Neue',sans-serif;font-size:16px;min-width:28px}
 .pick-info{flex:1}
 .pick-name{font-size:13px;font-weight:600}
@@ -101,18 +112,18 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 /* Right panel */
 .card{background:var(--s2);border:1px solid var(--border);border-radius:10px;overflow:hidden;flex-shrink:0}
 .ch{padding:8px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;
-  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);background:rgba(70,29,124,.15)}
 .pip{width:7px;height:7px;border-radius:50%;background:var(--accent)}
 .cb{padding:10px 12px}
 .brow{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:8px 11px;margin-bottom:6px}
 .brow:last-child{margin-bottom:0}
-.brow.mine{border-color:var(--lsu-gold);background:rgba(196,164,74,.06)}
+.brow.mine{border-color:var(--accent);background:rgba(70,29,124,.25)}
 .bt{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.bn{font-size:13px;font-weight:600}.bn.mbn{color:var(--lsu-gold)}
+.bn{font-size:13px;font-weight:600}.bn.mbn{color:var(--accent)}
 .bv{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted2)}
 .btrack{height:5px;background:var(--border2);border-radius:3px;overflow:hidden}
 .bfill{height:100%;border-radius:3px;transition:width .4s;background:var(--accent2)}
-.brow.mine .bfill{background:linear-gradient(90deg,#3d1f6b,var(--lsu-gold))}
+.brow.mine .bfill{background:linear-gradient(90deg,#461D7C,#FDD023)}
 .bsub{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:3px;text-align:right}
 .rrow{display:flex;justify-content:space-between;align-items:center;
   padding:5px 0;border-bottom:1px solid var(--border);font-size:13px}
@@ -123,12 +134,12 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 .sec-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;
   color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:7px}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
-.alert-card{background:var(--s2);border:1px solid var(--accent3);border-radius:10px;padding:11px 13px;flex-shrink:0}
+.alert-card{background:rgba(70,29,124,.4);border:1px solid var(--accent);border-radius:10px;padding:11px 13px;flex-shrink:0;box-shadow:0 0 16px rgba(253,208,35,.15)}
 
 /* Modal */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;
   display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.modal{background:var(--s2);border:1px solid var(--border2);border-radius:14px;padding:20px;width:420px;max-width:95vw}
+.modal{background:linear-gradient(160deg,#1c0f2e,#22143a);border:1px solid rgba(253,208,35,.3);border-radius:14px;padding:20px;width:420px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 .m-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;margin-bottom:3px}
 .m-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:14px}
 .mstats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
@@ -137,7 +148,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 .ms-v{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1}
 .need-bar-wrap{margin-bottom:12px}
 .need-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
-.need-track{height:7px;background:var(--border2);border-radius:4px;overflow:hidden}
+.need-track{height:7px;background:rgba(70,29,124,.3);border-radius:4px;overflow:hidden;border:1px solid var(--border2)}
 .need-fill{height:100%;border-radius:4px;transition:width .4s}
 .need-note{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted2);margin-top:3px}
 .bid-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
@@ -146,7 +157,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
   outline:none;text-align:center;transition:border .15s}
 .bid-input:focus{border-color:var(--accent)}
 .team-sel{flex:1;background:var(--s3);border:1px solid var(--border2);border-radius:9px;
-  padding:8px 10px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;outline:none}
+  padding:8px 10px;color:var(--text);font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;outline:none}
 .warn{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent3);margin-bottom:8px}
 .m-actions{display:flex;gap:7px;justify-content:flex-end}
 .vi-val{color:#e8c84a}.vi-sv{color:#4ab8e8}.vi-op{color:#e8644a}.vi-so{color:#e8a44a}
@@ -154,13 +165,82 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 </head>
 <body>
 <div class="header">
-  <div><div class="logo">NFLU</div><div class="logo-sub">2026 Draft Tracker</div></div>
+  <div style="display:flex;align-items:center;gap:10px">
+    
+    <div>
+      <div class="logo" style="font-size:28px;letter-spacing:5px;text-shadow:0 0 20px rgba(253,208,35,.3)">LSU</div>
+      <div class="logo-sub" style="color:var(--accent2);letter-spacing:3px">2026 DRAFT WAR ROOM</div>
+    </div>
+  </div>
+  <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+  <!-- Tiger face - geometric angular style -->
+  <!-- Main head shape -->
+  <polygon points="22,2 38,10 42,22 38,36 22,42 6,36 2,22 6,10" fill="#461D7C" stroke="#FDD023" stroke-width="1.5"/>
+  <!-- Forehead -->
+  <polygon points="22,5 34,11 36,20 22,18 8,20 10,11" fill="#5a2a8a"/>
+  <!-- Ears -->
+  <polygon points="6,10 2,2 10,8" fill="#FDD023"/>
+  <polygon points="38,10 42,2 34,8" fill="#FDD023"/>
+  <!-- Ear inner -->
+  <polygon points="6,9 4,4 9,8" fill="#461D7C"/>
+  <polygon points="38,9 40,4 35,8" fill="#461D7C"/>
+  <!-- Eyes -->
+  <ellipse cx="15" cy="19" rx="4" ry="3" fill="#FDD023"/>
+  <ellipse cx="29" cy="19" rx="4" ry="3" fill="#FDD023"/>
+  <ellipse cx="15" cy="19.5" rx="2.2" ry="2" fill="#1a0830"/>
+  <ellipse cx="29" cy="19.5" rx="2.2" ry="2" fill="#1a0830"/>
+  <!-- Eye shine -->
+  <circle cx="14" cy="18.5" r="0.7" fill="rgba(255,255,255,0.6)"/>
+  <circle cx="28" cy="18.5" r="0.7" fill="rgba(255,255,255,0.6)"/>
+  <!-- Nose bridge stripe -->
+  <polygon points="22,16 24,20 22,22 20,20" fill="#2a1050"/>
+  <!-- Nose -->
+  <polygon points="19,25 22,23 25,25 22,28" fill="#c8791a"/>
+  <!-- Mouth -->
+  <path d="M 18,28 Q 22,31 26,28" stroke="#FDD023" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Whisker dots -->
+  <circle cx="12" cy="27" r="0.8" fill="#FDD023" opacity="0.7"/>
+  <circle cx="10" cy="29" r="0.8" fill="#FDD023" opacity="0.7"/>
+  <circle cx="13" cy="31" r="0.8" fill="#FDD023" opacity="0.7"/>
+  <circle cx="32" cy="27" r="0.8" fill="#FDD023" opacity="0.7"/>
+  <circle cx="34" cy="29" r="0.8" fill="#FDD023" opacity="0.7"/>
+  <circle cx="31" cy="31" r="0.8" fill="#FDD023" opacity="0.7"/>
+  <!-- Whiskers -->
+  <line x1="13" y1="28" x2="3" y2="25" stroke="#FDD023" stroke-width="0.8" opacity="0.5"/>
+  <line x1="13" y1="30" x2="3" y2="31" stroke="#FDD023" stroke-width="0.8" opacity="0.5"/>
+  <line x1="31" y1="28" x2="41" y2="25" stroke="#FDD023" stroke-width="0.8" opacity="0.5"/>
+  <line x1="31" y1="30" x2="41" y2="31" stroke="#FDD023" stroke-width="0.8" opacity="0.5"/>
+  <!-- Forehead stripes -->
+  <line x1="18" y1="8" x2="16" y2="15" stroke="#FDD023" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+  <line x1="22" y1="6" x2="22" y2="14" stroke="#FDD023" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+  <line x1="26" y1="8" x2="28" y2="15" stroke="#FDD023" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+  <!-- Chin -->
+  <polygon points="16,32 22,42 28,32 22,35" fill="#5a2a8a"/>
+</svg>
   <div class="divider"></div>
   <div class="budget-badge">
     <div class="budget-lbl">LSU Remaining</div>
     <div class="budget-val" id="myBudget">$320</div>
+
+  </div>
+  <div style="display:flex;gap:8px">
+    <div id="effCard" style="display:none;background:var(--s2);border:1px solid var(--border2);border-radius:7px;padding:5px 12px;min-width:110px">
+      <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase">PPG / $100</div>
+      <div style="display:flex;align-items:baseline;gap:4px">
+        <div id="effVal" style="font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:1">—</div>
+        <div id="effLbl" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)"></div>
+      </div>
+    </div>
+    <div id="boardValCard" style="background:var(--s2);border:1px solid var(--border2);border-radius:7px;padding:5px 12px;min-width:140px">
+      <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase">Board Value Left</div>
+      <div style="display:flex;align-items:baseline;gap:4px">
+        <div id="boardValNum" style="font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:1">—</div>
+        <div id="boardValLbl" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)"></div>
+      </div>
+    </div>
   </div>
   <div class="h-spacer"></div>
+  <button class="btn btn-ghost" id="undoBtn" onclick="undoLast()" style="opacity:0.4;pointer-events:none;padding:6px 14px;font-size:12px">↩ Undo</button>
   <div class="nom-wrap">
     <div class="nom-lbl">Nominate</div>
     <input class="nom-input" id="nomInput" placeholder="Type player name..." list="pList" autocomplete="off">
@@ -176,6 +256,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
       <div class="tab" onclick="setTab('log',this)">Pick Log</div>
       <div class="tab" onclick="setTab('need',this)">Need</div>
       <div class="tab" onclick="setTab('roster',this)">My Roster</div>
+      <div class="tab" onclick="setTab('summary',this)">Summary</div>
     </div>
 
     <div id="tab-board">
@@ -195,7 +276,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
       </div>
       <div class="th">
         <div>Player</div><div class="tc">PFF</div><div class="tc">Impact</div>
-        <div class="tc">Need</div><div class="tc">Proj</div><div class="tc">Value</div>
+        <div class="tc">Need</div><div class="tc">Proj</div><div class="tc">Value</div><div class="tc">★</div>
       </div>
       <div id="br"></div>
     </div>
@@ -208,6 +289,11 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
     <div id="tab-need" style="display:none">
       <div class="sec-title">Available Prospects by Roster Need</div>
       <div id="nd"></div>
+    </div>
+
+    <div id="tab-summary" style="display:none">
+      <div class="sec-title">Draft Summary — LSU</div>
+      <div id="summaryBody"><div class="no-rows">No picks logged yet</div></div>
     </div>
 
     <div id="tab-roster" style="display:none">
@@ -239,6 +325,19 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
       <div class="cb" id="rs"></div>
     </div>
     <div id="al" style="display:none"></div>
+    <div class="card">
+      <div class="ch"><div class="pip" style="background:var(--accent3)"></div>Position Scarcity</div>
+      <div style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:9px;line-height:1.8;color:var(--muted2)">
+        <div>Bar = high-impact players remaining (Impact ≥40)</div>
+        <div style="display:flex;gap:12px;margin-top:4px">
+          <span style="color:var(--accent2)">● Plenty left</span>
+          <span style="color:var(--gold)">● Half gone</span>
+          <span style="color:var(--accent3)">● Nearly gone</span>
+        </div>
+        <div style="margin-top:3px;color:var(--muted)">⭐ = your starred targets remaining</div>
+      </div>
+      <div class="cb" id="scarcityBody"></div>
+    </div>
 
     <!-- Impact Score key -->
     <div class="card">
@@ -308,7 +407,7 @@ const TEAMS=[{"name": "Texas A&M", "budget": 400, "abbr": "TAMU", "my_team": fal
 const ROSTER=[{"name": "Derek Stingley", "position": "DB", "blended_ppg": 9.63, "years_remaining": 1, "ppg_2025": 8.938, "hist_max_ppg": 13.556, "proj_max_ppg": 10.85}, {"name": "Tariq Woolen", "position": "DB", "blended_ppg": 8.03, "years_remaining": 1, "ppg_2025": 7.1, "hist_max_ppg": 13.267, "proj_max_ppg": 9.27}, {"name": "Nolan Smith", "position": "DE", "blended_ppg": 7.98, "years_remaining": 2, "ppg_2025": 7.591, "hist_max_ppg": 10.183, "proj_max_ppg": 10.48}, {"name": "Donovan Ezeiruaku", "position": "DE", "blended_ppg": 7.7, "years_remaining": 4, "ppg_2025": 7.609, "hist_max_ppg": 7.609, "proj_max_ppg": 8.54}, {"name": "Jalon Walker", "position": "DE", "blended_ppg": 9.93, "years_remaining": 4, "ppg_2025": 9.839, "hist_max_ppg": 9.839, "proj_max_ppg": 10.71}, {"name": "Nick Herbig", "position": "DE", "blended_ppg": 12.84, "years_remaining": 2, "ppg_2025": 12.839, "hist_max_ppg": 12.839, "proj_max_ppg": 7.64}, {"name": "Logan Hall", "position": "DT", "blended_ppg": 7.82, "years_remaining": 1, "ppg_2025": 7.75, "hist_max_ppg": 8.232, "proj_max_ppg": 7.97}, {"name": "Byron Murphy", "position": "DT", "blended_ppg": 12.78, "years_remaining": 3, "ppg_2025": 12.766, "hist_max_ppg": 14.4, "proj_max_ppg": 8.06}, {"name": "Darius Alexander", "position": "DT", "blended_ppg": 5.49, "years_remaining": 4, "ppg_2025": 5.15, "hist_max_ppg": 5.15, "proj_max_ppg": 8.57}, {"name": "Jihaad Campbell", "position": "LB", "blended_ppg": 8.44, "years_remaining": 3, "ppg_2025": 8.406, "hist_max_ppg": 8.406, "proj_max_ppg": 9.08}, {"name": "Jeffrey Bassa", "position": "LB", "blended_ppg": 3.44, "years_remaining": 4, "ppg_2025": 1.562, "hist_max_ppg": 1.562, "proj_max_ppg": 9.09}, {"name": "Nick Martin", "position": "LB", "blended_ppg": 3.57, "years_remaining": 4, "ppg_2025": 3.571, "hist_max_ppg": 3.571, "proj_max_ppg": null}, {"name": "Will Levis", "position": "QB", "blended_ppg": 13.8, "years_remaining": 2, "ppg_2025": 0.0, "hist_max_ppg": 11.891, "proj_max_ppg": 16.67}, {"name": "Cam Ward", "position": "QB", "blended_ppg": 11.78, "years_remaining": 4, "ppg_2025": 11.311, "hist_max_ppg": 11.311, "proj_max_ppg": 16.04}, {"name": "Ashton Jeanty", "position": "RB", "blended_ppg": 14.59, "years_remaining": 3, "ppg_2025": 14.419, "hist_max_ppg": 14.419, "proj_max_ppg": 17.78}, {"name": "Roschon Johnson", "position": "RB", "blended_ppg": 2.96, "years_remaining": 2, "ppg_2025": 2.286, "hist_max_ppg": 6.764, "proj_max_ppg": 8.07}, {"name": "RJ Harvey", "position": "RB", "blended_ppg": 12.79, "years_remaining": 4, "ppg_2025": 13.003, "hist_max_ppg": 13.003, "proj_max_ppg": 10.89}, {"name": "Dylan Sampson", "position": "RB", "blended_ppg": 6.98, "years_remaining": 4, "ppg_2025": 6.443, "hist_max_ppg": 6.443, "proj_max_ppg": 11.84}, {"name": "Dalton Kincaid", "position": "TE", "blended_ppg": 12.39, "years_remaining": 2, "ppg_2025": 12.391, "hist_max_ppg": 12.391, "proj_max_ppg": 11.47}, {"name": "Zay Flowers", "position": "WR", "blended_ppg": 13.33, "years_remaining": 1, "ppg_2025": 13.281, "hist_max_ppg": 13.607, "proj_max_ppg": 9.73}, {"name": "Marvin Harison Jr.", "position": "WR", "blended_ppg": 10.69, "years_remaining": 2, "ppg_2025": 10.65, "hist_max_ppg": 10.907, "proj_max_ppg": 9.86}, {"name": "Malik Nabers", "position": "WR", "blended_ppg": 15.53, "years_remaining": 2, "ppg_2025": 15.275, "hist_max_ppg": 16.969, "proj_max_ppg": 12.61}, {"name": "Alec Pierce", "position": "WR", "blended_ppg": 11.58, "years_remaining": 1, "ppg_2025": 11.579, "hist_max_ppg": 11.579, "proj_max_ppg": 7.31}, {"name": "Ja'Lynn Polk", "position": "WR", "blended_ppg": 4.92, "years_remaining": 2, "ppg_2025": 0.0, "hist_max_ppg": 2.343, "proj_max_ppg": 8.79}, {"name": "Jaylin Noel", "position": "WR", "blended_ppg": 7.26, "years_remaining": 4, "ppg_2025": 7.147, "hist_max_ppg": 7.147, "proj_max_ppg": 8.27}];
 const PS={"DB": {"count": 2, "best": 9.1, "worst": 8.7, "mean": 8.9, "ppgs": [9.1, 8.7]}, "DE": {"count": 4, "best": 14.2, "worst": 8.4, "mean": 10.62, "ppgs": [14.2, 11.3, 8.6, 8.4]}, "DT": {"count": 3, "best": 14.0, "worst": 4.9, "mean": 8.47, "ppgs": [14.0, 6.5, 4.9]}, "LB": {"count": 3, "best": 8.5, "worst": 1.6, "mean": 4.57, "ppgs": [8.5, 3.6, 1.6]}, "QB": {"count": 2, "best": 11.9, "worst": 9.5, "mean": 10.7, "ppgs": [11.9, 9.5]}, "RB": {"count": 4, "best": 13.8, "worst": 3.9, "mean": 9.15, "ppgs": [13.8, 12.4, 6.5, 3.9]}, "TE": {"count": 1, "best": 14.0, "worst": 14.0, "mean": 14.0, "ppgs": [14.0]}, "WR": {"count": 6, "best": 15.6, "worst": 2.3, "mean": 10.3, "ppgs": [15.6, 12.7, 12.3, 12.2, 6.7, 2.3]}};
 
-let picks=[], sold=new Set(), cur=null, pf='ALL';
+let picks=[], sold=new Set(), targets=new Set(), cur=null, pf='ALL';
 
 function pc(p){const m={'QB':'#e87a4a','RB':'#4ae87a','WR':'#4ac8e8','TE':'#a878e8','DE':'#e8c84a','DT':'#e8a44a','LB':'#78c8e8','CB':'#c8e878','S':'#e8788a','DB':'#e8788a'};return m[p]||'#7a88a8';}
 function ic(s){return s>=60?'#e8c84a':s>=40?'#4ab8e8':s>=20?'#7a88a8':'#e8644a';}
@@ -350,7 +449,8 @@ function rb(){
   document.getElementById('br').innerHTML=rows.map(p=>{
     const imp=p.impact_score||0,need=p.roster_need||0;
     const sn=p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    return `<div class="tr${sold.has(p.name)?' sold':''}" onclick="om('${sn}')">
+    const isTarget=targets.has(p.name);
+    return `<div class="tr${sold.has(p.name)?' sold':''}${isTarget?' targeted':''}" onclick="om('${sn}')">
       <div><div class="pn">${p.display_name}</div>
         <div class="pg" style="color:${pc(p.position)}">${p.position} · #${p.pff_rank}</div></div>
       <div class="tc" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted2)">#${p.pff_rank}</div>
@@ -358,6 +458,7 @@ function rb(){
       <div class="tc" style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:${nc(need)}">${need}</div>
       <div class="tc" style="font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--gold)">${p.proj_price>1?'$'+p.proj_price:'—'}</div>
       <div class="tc">${vi(p.value_label)}</div>
+      <div class="tc" onclick="event.stopPropagation();toggleTarget('${sn}')" style="cursor:pointer;font-size:14px">${targets.has(p.name)?'⭐':'☆'}</div>
     </div>`;
   }).join('')||'<div class="no-rows">No players match</div>';
 }
@@ -373,6 +474,9 @@ function rbg(){
     </div>`;
   }).join('');
   document.getElementById('myBudget').textContent='$'+mb();
+  // Option B: PPG efficiency (projected PPG per dollar spent)
+  // Option C: remaining board value vs remaining budget
+  updateValueMetrics();
 }
 
 // Roster snapshot (right rail - compact)
@@ -384,7 +488,7 @@ function rrs(){
   for(const pos of posOrder){
     const ex=ROSTER.filter(r=>r.position===pos&&r.years_remaining>0);
     const nw=incoming.filter(p=>(RPOS[p.position]||p.position)===pos);
-    const allPPG=[...ex.map(r=>r.blended_ppg),...nw.map(p=>p.player_obj&&p.player_obj.predicted_max_ppg||0)];
+    const allPPG=[...ex.map(r=>r.blended_ppg),...nw.map(p=>(p.player_obj&&p.player_obj.predicted_max_ppg)||0)];
     if(!allPPG.length) continue;
     const best=Math.max(...allPPG),n=allPPG.length;
     const col=best>=14?'var(--green)':best>=10?'var(--accent)':best>=7?'var(--gold)':'var(--accent3)';
@@ -543,27 +647,180 @@ function lp(){
   if(team==='LSU') showAlert(cur,amt);
 }
 function dp(i){sold.delete(picks[i].name);picks.splice(i,1);ra();}
+function toggleTarget(name){
+  if(targets.has(name)) targets.delete(name); else targets.add(name);
+  rb(); updateScarcity();
+}
+function undoLast(){if(!picks.length)return;const last=picks[picks.length-1];sold.delete(last.name);picks.pop();ra();}
 
 function showAlert(p,price){
-  const proj=p.proj_price||0,diff=price-proj;
-  const msg=Math.abs(diff)<5?`Paid $${price} — right at projection ($${proj}).`:
+  const proj=(p&&p.proj_price&&p.proj_price>1)?p.proj_price:0;
+  const diff=price-proj;
+  const msg=proj===0?`Logged at $${price}.`:
+    Math.abs(diff)<5?`Paid $${price} — right at projection ($${proj}).`:
     diff>0?`$${diff} above projection.`:`$${Math.abs(diff)} below projection — value pick.`;
   document.getElementById('al').style.display='block';
   document.getElementById('al').innerHTML=`<div class="alert-card">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:19px;color:var(--accent)">${p.display_name} — $${price}</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:19px;color:var(--accent)">${p&&p.display_name?p.display_name:'Player'} — $${price}</div>
     <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted2);margin-top:4px">${msg}</div>
     <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px">LSU remaining: $${mb()}</div>
   </div>`;
 }
 
+function updateValueMetrics(){
+  const myPicks = picks.filter(p=>p.team==='LSU');
+  const totalSpent = myPicks.reduce((s,p)=>s+p.price, 0);
+
+  // Option B: total projected max PPG added per $100 spent
+  const effCard = document.getElementById('effCard');
+  if(myPicks.length>0 && totalSpent>0){
+    effCard.style.display='block';
+    const totalPPG = myPicks.reduce((s,p)=>{
+      return s+((p.player_obj&&p.player_obj.predicted_max_ppg)||0);
+    },0);
+    // Expected spend = sum of fair market projections
+    const expectedSpend = myPicks.reduce((s,p)=>{
+      const proj=(p.player_obj&&p.player_obj.proj_price&&p.player_obj.proj_price>1)?p.player_obj.proj_price:p.price;
+      return s+proj;
+    },0);
+    const actualEff   = totalPPG/totalSpent*100;
+    const expectedEff = totalPPG/expectedSpend*100;
+    // Ratio: 1.0 = paid fair value, >1 = overpaid (got less PPG per $ than market), <1 = underpaid
+    const ratio = expectedEff>0 ? actualEff/expectedEff : 1;
+    const effEl = document.getElementById('effVal');
+    const effLbl = document.getElementById('effLbl');
+    effEl.textContent = actualEff.toFixed(1);
+    // Grade vs expected market efficiency — not a flat benchmark
+    if(ratio>=0.95){effEl.style.color='var(--green)';effLbl.textContent='fair value';}
+    else if(ratio>=0.80){effEl.style.color='var(--accent)';effLbl.textContent='slight premium';}
+    else if(ratio>=0.60){effEl.style.color='var(--gold)';effLbl.textContent='overpaid';}
+    else{effEl.style.color='var(--accent3)';effLbl.textContent='well overpaid';}
+  } else {
+    effCard.style.display='none';
+  }
+
+  // Option C: sum of proj_price for remaining high-impact (>=40) unsold players vs my budget left
+  const remaining = mb();
+  const boardValue = PLAYERS
+    .filter(p=>!sold.has(p.name)&&(p.impact_score||0)>=40&&(p.proj_price||0)>1)
+    .reduce((s,p)=>s+(p.proj_price||0),0);
+  const bvEl = document.getElementById('boardValNum');
+  const bvLbl = document.getElementById('boardValLbl');
+  const bvCard = document.getElementById('boardValCard');
+  bvEl.textContent = '$'+boardValue;
+  bvLbl.textContent = 'vs $'+remaining+' left';
+  if(boardValue<=remaining){
+    bvEl.style.color='var(--green)';
+    bvCard.style.borderColor='rgba(74,232,154,.3)';
+  } else if(boardValue<=remaining*1.5){
+    bvEl.style.color='var(--accent)';
+    bvCard.style.borderColor='var(--border2)';
+  } else {
+    bvEl.style.color='var(--accent3)';
+    bvCard.style.borderColor='rgba(232,100,74,.3)';
+  }
+}
+
+function updateScarcity(){
+  const posOrder=['QB','RB','WR','TE','DE','DT','LB','S','CB'];
+  const IMPACT_THRESH=40; // "high impact" players
+  let html='';
+  for(const pos of posOrder){
+    const allHigh=PLAYERS.filter(p=>p.position===pos&&(p.impact_score||0)>=IMPACT_THRESH);
+    const remaining=allHigh.filter(p=>!sold.has(p.name));
+    const targeted=remaining.filter(p=>targets.has(p.name));
+    if(!allHigh.length) continue;
+    const pct=remaining.length/allHigh.length;
+    const col=pct<=0.3?'var(--accent3)':pct<=0.6?'var(--gold)':'var(--accent2)';
+    const tStar=targeted.length>0?` <span style="color:#e8c84a">⭐${targeted.length}</span>`:'';
+    html+=`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;min-width:30px;color:${col}">${pos}</div>
+      <div style="flex:1">
+        <div style="height:5px;background:var(--border2);border-radius:3px;overflow:hidden">
+          <div style="height:100%;width:${Math.round(pct*100)}%;background:${col};border-radius:3px;transition:width .3s"></div>
+        </div>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:${col};min-width:40px;text-align:right">${remaining.length}/${allHigh.length}${tStar}</div>
+    </div>`;
+  }
+  document.getElementById('scarcityBody').innerHTML=html||'<div style="color:var(--muted);font-size:10px;font-family:DM Mono,monospace">No high-impact players tracked</div>';
+}
+
 function setTab(t,el){
-  ['board','log','need','roster'].forEach(x=>document.getElementById('tab-'+x).style.display=x===t?'block':'none');
+  ['board','log','need','roster','summary'].forEach(x=>document.getElementById('tab-'+x).style.display=x===t?'block':'none');
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   el.classList.add('active');
   if(t==='need') rnd();
   if(t==='log') rpl();
   if(t==='roster') rroster();
+  if(t==='summary') rsummary();
 }
-function ra(){rb();rbg();rrs();rpl();}
+function rsummary(){
+  const myPicks=picks.filter(p=>p.team==='LSU');
+  if(!myPicks.length){document.getElementById('summaryBody').innerHTML='<div class="no-rows">No picks logged yet</div>';return;}
+  const totalSpent=myPicks.reduce((s,p)=>s+p.price,0);
+  const remaining=mb();
+  let html=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:10px 12px">
+      <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Spent</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent)">$${totalSpent}</div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:10px 12px">
+      <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Remaining</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green)">$${remaining}</div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:10px 12px">
+      <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Picks</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent2)">${myPicks.length}</div>
+    </div>
+  </div>
+  <div class="sec-title">Pick Breakdown</div>
+  <div style="display:grid;grid-template-columns:1fr 52px 52px 52px 72px;gap:0;margin-bottom:4px">
+    <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;padding:5px 10px">Player</div>
+    <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;padding:5px;text-align:center">Paid</div>
+    <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;padding:5px;text-align:center">Proj</div>
+    <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;padding:5px;text-align:center">Diff</div>
+    <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;padding:5px;text-align:center">Value</div>
+  </div>`;
+  let totalDiff=0;
+  myPicks.forEach(pick=>{
+    const proj=pick.player_obj&&pick.player_obj.proj_price>1?pick.player_obj.proj_price:null;
+    const diff=proj?pick.price-proj:null;
+    if(diff!==null) totalDiff+=diff;
+    const diffCol=diff===null?'var(--muted)':diff>5?'var(--accent3)':diff<-5?'var(--green)':'var(--muted2)';
+    const diffTxt=diff===null?'—':diff>0?'+$'+diff:'−$'+Math.abs(diff);
+    // Value verdict: compare actual price paid vs model projection
+    let vTxt='—', vColor='var(--muted)';
+    if(proj){
+      const overpay=pick.price-proj;
+      const pct=Math.round(overpay/proj*100);
+      if(pct<=-20){vTxt='▲ Value';vColor='var(--green)';}
+      else if(pct<=-5){vTxt='▲ Slight value';vColor='var(--accent2)';}
+      else if(pct<=10){vTxt='Fair';vColor='var(--muted2)';}
+      else if(pct<=30){vTxt='▼ Slight over';vColor='var(--gold)';}
+      else if(pct<=60){vTxt='▼ Overpaid';vColor='var(--accent3)';}
+      else{vTxt='▼▼ Well over';vColor='var(--accent3)';}
+    }
+    html+=`<div style="display:grid;grid-template-columns:1fr 52px 52px 52px 72px;border-top:1px solid var(--border);align-items:center">
+      <div style="padding:8px 10px">
+        <div style="font-size:13px;font-weight:600">${pick.display_name}</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:${ic(pick.player_obj&&pick.player_obj.impact_score||0)}">${pick.position} · Impact ${pick.player_obj&&pick.player_obj.impact_score||'—'}</div>
+      </div>
+      <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--accent)">$${pick.price}</div>
+      <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold)">${proj?'$'+proj:'—'}</div>
+      <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:18px;color:${diffCol}">${diffTxt}</div>
+      <div style="text-align:center;font-family:'DM Mono',monospace;font-size:10px;color:${vColor}">${vTxt}</div>
+    </div>`;
+  });
+  const netCol=totalDiff>10?'var(--accent3)':totalDiff<-10?'var(--green)':'var(--muted2)';
+  html+=`<div style="border-top:2px solid var(--border2);padding:10px 10px;display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Net vs projections</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:${netCol}">${totalDiff>0?'+$'+totalDiff:'−$'+Math.abs(totalDiff)}</div>
+  </div>`;
+  document.getElementById('summaryBody').innerHTML=html;
+}
+
+function ra(){rb();rbg();rrs();rpl();updateScarcity();updateValueMetrics();const btn=document.getElementById('undoBtn');if(btn){btn.style.opacity=picks.length?'1':'0.4';btn.style.pointerEvents=picks.length?'auto':'none';}}
 ra();
+updateValueMetrics();
 </script></body></html>
