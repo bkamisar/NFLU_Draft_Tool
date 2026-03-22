@@ -274,6 +274,7 @@ body::before{content:'';position:fixed;inset:0;
           <option value="auction">Auction $</option>
           <option value="value">Value Signal</option>
           <option value="pff">PFF Rank</option>
+          <option value="ppg">Proj PPG</option>
         </select>
         <label style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px">
           <input type="checkbox" id="hs" onchange="rb()" checked> Hide sold
@@ -494,6 +495,7 @@ function rb(){
   else if(sort==='auction') rows.sort((a,b)=>(b.proj_price||0)-(a.proj_price||0));
   else if(sort==='value') rows.sort((a,b)=>(b.value_gap||0)-(a.value_gap||0));
   else if(sort==='pff') rows.sort((a,b)=>(a.pff_rank||999)-(b.pff_rank||999));
+  else if(sort==='ppg') rows.sort((a,b)=>((b.blended_ppg||b.predicted_max_ppg||0))-((a.blended_ppg||a.predicted_max_ppg||0)));
   document.getElementById('br').innerHTML=rows.map(p=>{
     const imp=p.impact_score||0,need=p.roster_need||0;
     const sn=p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
