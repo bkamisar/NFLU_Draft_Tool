@@ -165,6 +165,30 @@ body::before{content:'';position:fixed;inset:0;
 .warn{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent3);margin-bottom:8px}
 .m-actions{display:flex;gap:7px;justify-content:flex-end}
 .vi-val{color:#e8c84a}.vi-sv{color:#4ab8e8}.vi-op{color:#e8644a}.vi-so{color:#e8a44a}
+
+/* League tab */
+.lgt-demand-card{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 13px}
+.lgt-hot{border-color:var(--accent3);background:rgba(232,90,42,.08)}
+.lgt-warm{border-color:var(--border2)}
+.lgt-ok{border-color:var(--border)}
+.lgt-pos{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--accent);line-height:1;margin-bottom:4px}
+.lgt-teams{font-size:12px;font-weight:600;margin-bottom:3px}
+.lgt-note{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);line-height:1.5}
+.lgt-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.5px;padding:1px 5px;border-radius:3px}
+.lgt-low{background:rgba(232,90,42,.2);color:var(--accent3);border:1px solid rgba(232,90,42,.4)}
+.lgt-exp{background:rgba(253,208,35,.15);color:var(--accent);border:1px solid rgba(253,208,35,.35)}
+.lgt-none{background:rgba(106,82,122,.25);color:var(--muted2);border:1px solid var(--border2)}
+.lgt-table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:10px}
+.lgt-table th{padding:5px 8px;text-align:center;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+.lgt-table th:first-child{text-align:left}
+.lgt-table td{padding:6px 8px;text-align:center;border-bottom:1px solid var(--border);color:var(--muted2)}
+.lgt-table td:first-child{text-align:left;color:var(--text);font-weight:600}
+.lgt-table tr:last-child td{border-bottom:none}
+.lgt-mine td{background:rgba(70,29,124,.2);color:var(--text)}
+.lgt-mine td:first-child{color:var(--accent)}
+.lgt-cell-low{color:var(--accent3)!important;font-weight:700}
+.lgt-cell-exp{color:var(--accent)!important;font-weight:700}
+.lgt-cell-none{color:var(--muted)!important;font-style:italic}
 </style>
 </head>
 <body>
@@ -267,6 +291,7 @@ body::before{content:'';position:fixed;inset:0;
       <div class="tab" onclick="setTab('need',this)">Need</div>
       <div class="tab" onclick="setTab('roster',this)">My Roster</div>
       <div class="tab" onclick="setTab('summary',this)">Summary</div>
+      <div class="tab" onclick="setTab('league',this)">League</div>
     </div>
 
     <div id="tab-board">
@@ -344,6 +369,68 @@ body::before{content:'';position:fixed;inset:0;
         <div style="text-align:right">Blended</div><div style="text-align:center">Yrs</div>
       </div>
       <div id="rosterFull"></div>
+    </div>
+
+    <div id="tab-league" style="display:none">
+      <div class="sec-title">Competitive Demand by Position</div>
+      <!-- Demand summary cards -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px">
+        <div class="lgt-demand-card lgt-hot">
+          <div class="lgt-pos">LB</div>
+          <div class="lgt-teams">LSU <span class="lgt-tag lgt-low">8.4 LOW</span> · MissState <span class="lgt-tag lgt-low">7.0 LOW</span></div>
+          <div class="lgt-note">Both teams weak — expect bidding competition</div>
+        </div>
+        <div class="lgt-demand-card lgt-warm">
+          <div class="lgt-pos">DT</div>
+          <div class="lgt-teams">Arkansas <span class="lgt-tag lgt-none">NONE</span> · Missouri <span class="lgt-tag lgt-exp">11.5 EXP</span></div>
+          <div class="lgt-note">Arkansas has nothing; Mizzou expiring</div>
+        </div>
+        <div class="lgt-demand-card lgt-warm">
+          <div class="lgt-pos">DB</div>
+          <div class="lgt-teams">LSU <span class="lgt-tag lgt-exp">9.8 EXP</span></div>
+          <div class="lgt-note">Both starters expire — FA glut limits urgency</div>
+        </div>
+        <div class="lgt-demand-card lgt-warm">
+          <div class="lgt-pos">DE</div>
+          <div class="lgt-teams">Ole Miss <span class="lgt-tag lgt-low">8.8 LOW</span></div>
+          <div class="lgt-note">Only one team soft here — less pressure</div>
+        </div>
+        <div class="lgt-demand-card lgt-warm">
+          <div class="lgt-pos">QB</div>
+          <div class="lgt-teams">LSU <span class="lgt-tag lgt-low">3.1 LOW</span> · MissState <span class="lgt-tag lgt-low">5.9 LOW</span></div>
+          <div class="lgt-note">Deep WR rooms cover the QB/flex slot — less urgent than it looks</div>
+        </div>
+        <div class="lgt-demand-card lgt-ok">
+          <div class="lgt-pos" style="display:inline">RB · WR</div>
+          <div class="lgt-note" style="margin-top:4px">All teams covered — low bidding pressure expected</div>
+        </div>
+      </div>
+
+      <!-- Full positional strength table -->
+      <div class="sec-title">Lineup Contribution by Position (delta PPG if removed)</div>
+      <div style="overflow-x:auto">
+        <table class="lgt-table">
+          <thead>
+            <tr><th>Team</th><th>Total</th><th>QB</th><th>RB</th><th>WR</th><th>DE</th><th>DT</th><th>LB</th><th>DB</th></tr>
+          </thead>
+          <tbody>
+            <tr class="lgt-mine"><td>LSU</td><td>151.2</td><td class="lgt-cell-low">3.1</td><td>16.7</td><td>30.5</td><td>17.4</td><td>12.8</td><td class="lgt-cell-low">8.4</td><td class="lgt-cell-exp">9.8</td></tr>
+            <tr><td>Alabama</td><td>141.9</td><td>16.5</td><td>16.8</td><td>36.3</td><td>15.7</td><td>13.2</td><td>9.0</td><td>12.0</td></tr>
+            <tr><td>Arkansas</td><td>151.4</td><td>10.7</td><td>36.4</td><td>13.4</td><td>22.9</td><td class="lgt-cell-none">0.0</td><td>25.5</td><td>21.2</td></tr>
+            <tr><td>Auburn</td><td>170.1</td><td>18.4</td><td>16.9</td><td>16.6</td><td>16.3</td><td>10.0</td><td>17.6</td><td>30.8</td></tr>
+            <tr><td>Ole Miss</td><td>175.8</td><td>12.0</td><td>21.4</td><td>30.3</td><td class="lgt-cell-low">8.8</td><td>11.5</td><td>31.5</td><td>14.9</td></tr>
+            <tr><td>Miss State</td><td>123.4</td><td class="lgt-cell-low">5.9</td><td>17.3</td><td>16.9</td><td>22.4</td><td>13.4</td><td class="lgt-cell-low">7.0</td><td>10.8</td></tr>
+            <tr><td>Missouri</td><td>147.1</td><td>16.0</td><td>20.4</td><td>24.5</td><td>21.6</td><td class="lgt-cell-exp">11.5</td><td>18.1</td><td>20.1</td></tr>
+            <tr><td>Texas A&amp;M</td><td>171.1</td><td>14.5</td><td>9.7</td><td>30.4</td><td>14.1</td><td>13.4</td><td>21.7</td><td>19.7</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:8px;line-height:1.8">
+        Values = how much the team's optimal lineup score drops if that position is removed entirely &nbsp;·&nbsp;
+        <span class="lgt-tag lgt-low">LOW</span> delta &lt; 9.0 &nbsp;·&nbsp;
+        <span class="lgt-tag lgt-exp">EXP</span> all expiring &nbsp;·&nbsp;
+        <span class="lgt-tag lgt-none">0.0</span> no players
+      </div>
     </div>
   </div>
 
@@ -438,7 +525,7 @@ body::before{content:'';position:fixed;inset:0;
 const TEAMS=[{"name": "Texas A&M", "budget": 400, "abbr": "TAMU", "my_team": false}, {"name": "Ole Miss", "budget": 358, "abbr": "OM", "my_team": false}, {"name": "Auburn", "budget": 342, "abbr": "AUB", "my_team": false}, {"name": "LSU", "budget": 320, "abbr": "LSU", "my_team": true}, {"name": "Arkansas", "budget": 301, "abbr": "ARK", "my_team": false}, {"name": "Missouri", "budget": 256, "abbr": "MIZ", "my_team": false}, {"name": "Alabama", "budget": 252, "abbr": "ALA", "my_team": false}, {"name": "Mississippi State", "budget": 215, "abbr": "MSU", "my_team": false}];
 const ROSTER=[{"name": "Derek Stingley", "position": "DB", "blended_ppg": 9.63, "years_remaining": 1, "ppg_2025": 8.938, "hist_max_ppg": 13.556, "proj_max_ppg": 10.85}, {"name": "Tariq Woolen", "position": "DB", "blended_ppg": 8.03, "years_remaining": 1, "ppg_2025": 7.1, "hist_max_ppg": 13.267, "proj_max_ppg": 9.27}, {"name": "Nolan Smith", "position": "DE", "blended_ppg": 7.98, "years_remaining": 2, "ppg_2025": 7.591, "hist_max_ppg": 10.183, "proj_max_ppg": 10.48}, {"name": "Donovan Ezeiruaku", "position": "DE", "blended_ppg": 7.7, "years_remaining": 4, "ppg_2025": 7.609, "hist_max_ppg": 7.609, "proj_max_ppg": 8.54}, {"name": "Jalon Walker", "position": "DE", "blended_ppg": 9.93, "years_remaining": 4, "ppg_2025": 9.839, "hist_max_ppg": 9.839, "proj_max_ppg": 10.71}, {"name": "Nick Herbig", "position": "DE", "blended_ppg": 12.84, "years_remaining": 2, "ppg_2025": 12.839, "hist_max_ppg": 12.839, "proj_max_ppg": 7.64}, {"name": "Logan Hall", "position": "DT", "blended_ppg": 7.82, "years_remaining": 1, "ppg_2025": 7.75, "hist_max_ppg": 8.232, "proj_max_ppg": 7.97}, {"name": "Byron Murphy", "position": "DT", "blended_ppg": 12.78, "years_remaining": 3, "ppg_2025": 12.766, "hist_max_ppg": 14.4, "proj_max_ppg": 8.06}, {"name": "Darius Alexander", "position": "DT", "blended_ppg": 5.49, "years_remaining": 4, "ppg_2025": 5.15, "hist_max_ppg": 5.15, "proj_max_ppg": 8.57}, {"name": "Jihaad Campbell", "position": "LB", "blended_ppg": 8.44, "years_remaining": 3, "ppg_2025": 8.406, "hist_max_ppg": 8.406, "proj_max_ppg": 9.08}, {"name": "Jeffrey Bassa", "position": "LB", "blended_ppg": 3.44, "years_remaining": 4, "ppg_2025": 1.562, "hist_max_ppg": 1.562, "proj_max_ppg": 9.09}, {"name": "Nick Martin", "position": "LB", "blended_ppg": 3.57, "years_remaining": 4, "ppg_2025": 3.571, "hist_max_ppg": 3.571, "proj_max_ppg": null}, {"name": "Will Levis", "position": "QB", "blended_ppg": 13.8, "years_remaining": 2, "ppg_2025": 0.0, "hist_max_ppg": 11.891, "proj_max_ppg": 16.67}, {"name": "Cam Ward", "position": "QB", "blended_ppg": 11.78, "years_remaining": 4, "ppg_2025": 11.311, "hist_max_ppg": 11.311, "proj_max_ppg": 16.04}, {"name": "Ashton Jeanty", "position": "RB", "blended_ppg": 14.59, "years_remaining": 3, "ppg_2025": 14.419, "hist_max_ppg": 14.419, "proj_max_ppg": 17.78}, {"name": "Roschon Johnson", "position": "RB", "blended_ppg": 2.96, "years_remaining": 2, "ppg_2025": 2.286, "hist_max_ppg": 6.764, "proj_max_ppg": 8.07}, {"name": "RJ Harvey", "position": "RB", "blended_ppg": 12.79, "years_remaining": 4, "ppg_2025": 13.003, "hist_max_ppg": 13.003, "proj_max_ppg": 10.89}, {"name": "Dylan Sampson", "position": "RB", "blended_ppg": 6.98, "years_remaining": 4, "ppg_2025": 6.443, "hist_max_ppg": 6.443, "proj_max_ppg": 11.84}, {"name": "Dalton Kincaid", "position": "TE", "blended_ppg": 12.39, "years_remaining": 2, "ppg_2025": 12.391, "hist_max_ppg": 12.391, "proj_max_ppg": 11.47}, {"name": "Zay Flowers", "position": "WR", "blended_ppg": 13.33, "years_remaining": 1, "ppg_2025": 13.281, "hist_max_ppg": 13.607, "proj_max_ppg": 9.73}, {"name": "Marvin Harison Jr.", "position": "WR", "blended_ppg": 10.69, "years_remaining": 2, "ppg_2025": 10.65, "hist_max_ppg": 10.907, "proj_max_ppg": 9.86}, {"name": "Malik Nabers", "position": "WR", "blended_ppg": 15.53, "years_remaining": 2, "ppg_2025": 15.275, "hist_max_ppg": 16.969, "proj_max_ppg": 12.61}, {"name": "Alec Pierce", "position": "WR", "blended_ppg": 11.58, "years_remaining": 1, "ppg_2025": 11.579, "hist_max_ppg": 11.579, "proj_max_ppg": 7.31}, {"name": "Ja'Lynn Polk", "position": "WR", "blended_ppg": 4.92, "years_remaining": 2, "ppg_2025": 0.0, "hist_max_ppg": 2.343, "proj_max_ppg": 8.79}, {"name": "Jaylin Noel", "position": "WR", "blended_ppg": 7.26, "years_remaining": 4, "ppg_2025": 7.147, "hist_max_ppg": 7.147, "proj_max_ppg": 8.27}];
 function setTab(t,el){
-  const tabs=['board','bid','log','need','roster','summary'];
+  const tabs=['board','bid','log','need','roster','summary','league'];
   tabs.forEach(x=>{const el2=document.getElementById('tab-'+x);if(el2)el2.style.display=x===t?'block':'none';});
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   if(el) el.classList.add('active');
